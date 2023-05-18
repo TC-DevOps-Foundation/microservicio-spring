@@ -36,7 +36,6 @@ steps:
   displayName: SonarCloud
 
 - task: Gradle@3
-  displayName: 'Run test'
   inputs:
     gradleWrapperFile: 'gradlew'
     workingDirectory: '$(Build.SourcesDirectory)'
@@ -45,6 +44,7 @@ steps:
     javaHomeOption: 'JDKVersion'
     sonarQubeRunAnalysis: false
     spotBugsAnalysis: false
+  displayName: 'Run test'
 
 - task: Gradle@3
   inputs:
