@@ -1,0 +1,67 @@
+# Starter pipeline
+# Start with a minimal pipeline that you can customize to build and deploy your code.
+# Add steps that build, run tests, deploy, and more:
+# https://aka.ms/yaml
+
+trigger:
+- feature-ms-TomasCastro-mensaje
+
+pool:
+  vmImage: ubuntu-latest
+
+steps:
+
+- script: |
+      git fetch --unshallow
+  displayName: 'convert to non-shallow clone' 
+
+- task: Gradle@3
+  inputs:
+    gradleWrapperFile: 'gradlew'
+    tasks: 'build jacocoTestReport'
+    publishJUnitResults: true
+    testResultsFiles: '**/TEST-*.xml'
+    javaHomeOption: 'JDKVersion'
+    sonarQubeRunAnalysis: false
+    spotBugsAnalysis: false
+  displayName: Build
+
+- task: PublishCodeCoverageResults@1
+  inputs:
+    codeCoverageTool: 'JaCoCo'
+    summaryFileLocation: '$(System.DefaultWorkingDirectory)/build/reports/jacoco/test/jacocoTestReport.xml'
+    pathToSources: '$(System.DefaultWorkingDirectory)/src/main/java/'
+    reportDirectory: '$(System.DefaultWorkingDirectory)/build/reports/jacoco/test'
+    failIfCoverageEmpty: true
+
+- task: SonarCloudPrepare@1
+  inputs:
+    SonarCloud: 'Sonar-Azure'
+    organization: 'tc-devops-foundation'
+    scannerMode: 'MSBuild'
+    projectKey: 'TC-DevOps-Foundation_microservicio-spring'
+    projectName: 'microservicio-spring'
+  displayName: SonarCloud
+
+- task: Gradle@3
+  inputs:
+    gradleWrapperFile: 'gradlew'
+#    workingDirectory: '$(Build.SourcesDirectory)'
+    publishJUnitResults: true
+    testResultsFiles: '*/TEST-.xml'
+    javaHomeOption: 'JDKVersion'
+    sonarQubeRunAnalysis: false
+    spotBugsAnalysis: false
+  displayName: 'Run test'
+
+- task: Gradle@3
+  inputs:
+    gradleWrapperFile: 'gradlew'
+    tasks: 'sonar'
+    publishJUnitResults: false
+    javaHomeOption: 'JDKVersion'
+    sonarQubeRunAnalysis: true
+    sqGradlePluginVersionChoice: 'specify'
+    sonarQubeGradlePluginVersion: '3.3'
+    spotBugsAnalysis: false
+
