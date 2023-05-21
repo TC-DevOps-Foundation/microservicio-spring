@@ -26,13 +26,13 @@ steps:
     spotBugsAnalysis: false
   displayName: Build
 
-- task: PublishCodeCoverageResults@1
-  inputs:
-    codeCoverageTool: 'JaCoCo'
-    summaryFileLocation: '$(System.DefaultWorkingDirectory)/build/reports/jacoco/test/jacocoTestReport.xml'
-    pathToSources: '$(System.DefaultWorkingDirectory)/src/main/java/'
-    reportDirectory: '$(System.DefaultWorkingDirectory)/build/reports/jacoco/test'
-    failIfCoverageEmpty: true
+#- task: PublishCodeCoverageResults@1
+#  inputs:
+#    codeCoverageTool: 'JaCoCo'
+#    summaryFileLocation: '$(System.DefaultWorkingDirectory)/build/reports/jacoco/test/jacocoTestReport.xml'
+#    pathToSources: '$(System.DefaultWorkingDirectory)/src/main/java/'
+#    reportDirectory: '$(System.DefaultWorkingDirectory)/build/reports/jacoco/test'
+#    failIfCoverageEmpty: true
 
 
 
@@ -67,4 +67,23 @@ steps:
 #    sqGradlePluginVersionChoice: 'specify'
 #    sonarQubeGradlePluginVersion: '3.3'
 #    spotBugsAnalysis: false
+
+- task: Docker@2
+  inputs:
+    containerRegistry: 'Docker'
+    command: 'login'
+
+- task: Docker@2
+  inputs:
+    containerRegistry: 'Docker'
+    repository: 'tomascastrogonzalez/microservicio-spring'
+    command: 'build'
+    Dockerfile: '**/Dockerfile'
+
+- task: Docker@2
+  inputs:
+    containerRegistry: 'Docker'
+    repository: 'tomascastrogonzalez/microservicio-spring'
+    command: 'push'
+
 
