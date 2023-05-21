@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: microservicio-spring-deployment
+  labels:
+    app: microservicio-sprin
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: microservicio-sprin
+  template:
+    metadata:
+      labels:
+        app: microservicio-sprin
+    spec:
+      containers:
+      - name: microservicio-sprin
+        image: tomascastrogonzalez/microservicio-spring:latest
+        ports:
+        - containerPort: 8084
