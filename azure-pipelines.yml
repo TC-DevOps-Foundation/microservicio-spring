@@ -72,6 +72,7 @@ steps:
   inputs:
     containerRegistry: 'Docker'
     command: 'login'
+  displayName: Docker Login
 
 - task: Docker@2
   inputs:
@@ -79,11 +80,13 @@ steps:
     repository: 'tomascastrogonzalez/microservicio-spring'
     command: 'build'
     Dockerfile: '**/Dockerfile'
+  displayName: Docker Build
 
 - task: Docker@2
   inputs:
     containerRegistry: 'Docker'
     repository: 'tomascastrogonzalez/microservicio-spring'
     command: 'push'
+  displayName: Docker Push
 
 
