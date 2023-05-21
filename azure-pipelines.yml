@@ -116,8 +116,10 @@ jobs:
       command: 'push'
     displayName: Docker Push
 
-- job: 'Build'
+- job:
+  dependsOn: Build
   pool: 'Default'
+  displayName: Kubernetes
   steps:
   
   - task: Kubernetes@1
