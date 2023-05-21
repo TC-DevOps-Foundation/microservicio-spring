@@ -116,7 +116,7 @@ jobs:
       command: 'push'
     displayName: Docker Push
 
-- job: 
+- job: 'Build'
   pool: 'Default'
   steps:
   
