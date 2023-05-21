@@ -15,6 +15,14 @@ steps:
       git fetch --unshallow
   displayName: 'convert to non-shallow clone' 
 
+- task: PublishCodeCoverageResults@1
+  inputs:
+    codeCoverageTool: 'JaCoCo'
+    summaryFileLocation: '$(System.DefaultWorkingDirectory)/build/reports/jacoco/test/jacocoTestReport.xml'
+    pathToSources: '$(System.DefaultWorkingDirectory)/src/main/java/'
+    reportDirectory: '$(System.DefaultWorkingDirectory)/build/reports/jacoco/test'
+    failIfCoverageEmpty: true
+
 - task: Gradle@3
   inputs:
     gradleWrapperFile: 'gradlew'
@@ -26,13 +34,7 @@ steps:
     spotBugsAnalysis: false
   displayName: Build
 
-#- task: PublishCodeCoverageResults@1
-#  inputs:
-#    codeCoverageTool: 'JaCoCo'
-#    summaryFileLocation: '$(System.DefaultWorkingDirectory)/build/reports/jacoco/test/jacocoTestReport.xml'
-#    pathToSources: '$(System.DefaultWorkingDirectory)/src/main/java/'
-#    reportDirectory: '$(System.DefaultWorkingDirectory)/build/reports/jacoco/test'
-#    failIfCoverageEmpty: true
+
 
 
 
