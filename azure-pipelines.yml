@@ -7,7 +7,7 @@ trigger:
 - feature-ms-TomasCastro-mensaje
 
 jobs:
-- job:
+- job: 'Build'
   pool:
     vmImage: ubuntu-latest
   displayName: Build
