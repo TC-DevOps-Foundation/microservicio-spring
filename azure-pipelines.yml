@@ -37,34 +37,34 @@ steps:
 
 
 
-- task: SonarCloudPrepare@1
-  inputs:
-    SonarCloud: 'Sonar-Azure'
-    organization: 'tc-devops-foundation'
-    scannerMode: 'MSBuild'
-    projectKey: 'TC-DevOps-Foundation_microservicio-spring'
-    projectName: 'microservicio-spring'
-  displayName: SonarCloud
+#- task: SonarCloudPrepare@1
+#  inputs:
+#    SonarCloud: 'Sonar-Azure'
+#    organization: 'tc-devops-foundation'
+#    scannerMode: 'MSBuild'
+#    projectKey: 'TC-DevOps-Foundation_microservicio-spring'
+#    projectName: 'microservicio-spring'
+#  displayName: SonarCloud
 
-- task: Gradle@3
-  inputs:
-    gradleWrapperFile: 'gradlew'
-#    workingDirectory: '$(Build.SourcesDirectory)'
-    publishJUnitResults: true
-    testResultsFiles: '*/TEST-.xml'
-    javaHomeOption: 'JDKVersion'
-    sonarQubeRunAnalysis: false
-    spotBugsAnalysis: false
-  displayName: 'Run test'
+#- task: Gradle@3
+#  inputs:
+#    gradleWrapperFile: 'gradlew'
+##    workingDirectory: '$(Build.SourcesDirectory)'
+#    publishJUnitResults: true
+#    testResultsFiles: '*/TEST-.xml'
+#    javaHomeOption: 'JDKVersion'
+#    sonarQubeRunAnalysis: false
+#    spotBugsAnalysis: false
+#  displayName: 'Run test'
 
-- task: Gradle@3
-  inputs:
-    gradleWrapperFile: 'gradlew'
-    tasks: 'sonar'
-    publishJUnitResults: false
-    javaHomeOption: 'JDKVersion'
-    sonarQubeRunAnalysis: true
-    sqGradlePluginVersionChoice: 'specify'
-    sonarQubeGradlePluginVersion: '3.3'
-    spotBugsAnalysis: false
+#- task: Gradle@3
+#  inputs:
+#    gradleWrapperFile: 'gradlew'
+#    tasks: 'sonar'
+#    publishJUnitResults: false
+#    javaHomeOption: 'JDKVersion'
+#    sonarQubeRunAnalysis: true
+#    sqGradlePluginVersionChoice: 'specify'
+#    sonarQubeGradlePluginVersion: '3.3'
+#    spotBugsAnalysis: false
 
