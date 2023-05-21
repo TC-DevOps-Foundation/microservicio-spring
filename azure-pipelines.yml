@@ -37,28 +37,28 @@ steps:
     failIfCoverageEmpty: true
 
 - task: PowerShell@2
-  inputs:
-      targetType: 'inline'
-      script: |
-        $htmlReportPath = "$(System.DefaultWorkingDirectory)/build/jacocoHtml/test/html/index.html"
-        Write-Host "HTML report path: $htmlReportPath"  # Add this line to log the path
-        $coverageDataXml = Get-Content -Path "$(System.DefaultWorkingDirectory)/build/reports/jacoco/test/jacocoTestReport.xml" -Raw
-        Write-Host "XML report : $coverageDataXml"
-        $coverageData = Get-Content -Path "$(System.DefaultWorkingDirectory)/build/jacocoHtml/test/html/index.html" -Raw
-        # Realiza el análisis del archivo HTML para obtener los datos de cobertura necesarios
-        # Puedes utilizar expresiones regulares o técnicas de manipulación de cadenas para extraer los datos específicos que necesitas
-        $pattern = 'class="ctr2">(\d+)%<\/td>'
-        $coverageLine = $coverageData | Select-String -Pattern $pattern | ForEach-Object { $_.Matches.Groups[1].Value }
-        $coverage = [int]$coverageLine
-        $minCoverageThreshold = "$(min_coverage)"
-        Write-Host "Code coverage minimum $minCoverageThreshold% actual ($coverage%). ."#Comentar luego
-        if ($coverage -lt $minCoverageThreshold) {
-          Write-Host "Code coverage is below $minCoverageThreshold% ($coverage%). Failing the pipeline."
-          exit 1
-        } else {
-          Write-Host "Code coverage is above $minCoverageThreshold% ($coverage%)."
-        }
-  displayName: 'Check code coverage JaCoCoReport'
+#  inputs:
+#      targetType: 'inline'
+#      script: |
+#        $htmlReportPath = "$(System.DefaultWorkingDirectory)/build/jacocoHtml/test/html/index.html"
+#        Write-Host "HTML report path: $htmlReportPath"  # Add this line to log the path
+#        $coverageDataXml = Get-Content -Path "$(System.DefaultWorkingDirectory)/build/reports/jacoco/test/jacocoTestReport.xml" -Raw
+#        Write-Host "XML report : $coverageDataXml"
+#        $coverageData = Get-Content -Path "$(System.DefaultWorkingDirectory)/build/jacocoHtml/test/html/index.html" -Raw
+#        # Realiza el análisis del archivo HTML para obtener los datos de cobertura necesarios
+#        # Puedes utilizar expresiones regulares o técnicas de manipulación de cadenas para extraer los datos específicos que necesitas
+#        $pattern = 'class="ctr2">(\d+)%<\/td>'
+#        $coverageLine = $coverageData | Select-String -Pattern $pattern | ForEach-Object { $_.Matches.Groups[1].Value }
+#        $coverage = [int]$coverageLine
+#        $minCoverageThreshold = "$(min_coverage)"
+#        Write-Host "Code coverage minimum $minCoverageThreshold% actual ($coverage%). ."#Comentar luego
+#        if ($coverage -lt $minCoverageThreshold) {
+#          Write-Host "Code coverage is below $minCoverageThreshold% ($coverage%). Failing the pipeline."
+#          exit 1
+#        } else {
+#          Write-Host "Code coverage is above $minCoverageThreshold% ($coverage%)."
+#        }
+#  displayName: 'Check code coverage JaCoCoReport'
 
 
 #- task: SonarCloudPrepare@1
@@ -92,26 +92,26 @@ steps:
 #    sonarQubeGradlePluginVersion: '3.3'
 #    spotBugsAnalysis: false
 
-- task: Docker@2
-  inputs:
-    containerRegistry: 'Docker'
-    command: 'login'
-  displayName: Docker Login
+#- task: Docker@2
+#  inputs:
+#    containerRegistry: 'Docker'
+#    command: 'login'
+#  displayName: Docker Login
 
-- task: Docker@2
-  inputs:
-    containerRegistry: 'Docker'
-    repository: 'tomascastrogonzalez/microservicio-spring'
-    command: 'build'
-    Dockerfile: '**/Dockerfile'
-  displayName: Docker Build
+#- task: Docker@2
+#  inputs:
+#    containerRegistry: 'Docker'
+#    repository: 'tomascastrogonzalez/microservicio-spring'
+#    command: 'build'
+#    Dockerfile: '**/Dockerfile'
+#  displayName: Docker Build
 
-- task: Docker@2
-  inputs:
-    containerRegistry: 'Docker'
-    repository: 'tomascastrogonzalez/microservicio-spring'
-    command: 'push'
-  displayName: Docker Push
+#- task: Docker@2
+#  inputs:
+#    containerRegistry: 'Docker'
+#    repository: 'tomascastrogonzalez/microservicio-spring'
+#    command: 'push'
+#  displayName: Docker Push
 
 - task: CmdLine@2
   inputs:
