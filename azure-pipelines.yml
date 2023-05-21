@@ -97,7 +97,7 @@ steps:
         scenario:
           request:
             script: microservicio-spring.jmx
-    jmeterHome: '$(JMeterInstaller.JMeterHome)'
-    jmeterPath: '$(JMeterInstaller.JMeterPath)'
-    jmeterVersion: '$(JMeterInstaller.JMeterVersion)'
+    jmeterHome: 'C:\Users\tomas\Desktop\Programas\apache-jmeter-4.0'
+    jmeterPath: 'C:\Users\tomas\Desktop\Programas\apache-jmeter-4.0\bin'
+    jmeterVersion: '4.0'
     outputDir: 'taurus-output'
