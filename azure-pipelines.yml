@@ -6,59 +6,62 @@
 trigger:
 - feature-ms-TomasCastro-mensaje
 
-pool:
-  vmImage: ubuntu-latest
-
-steps:
-
-- script: |
-      git fetch --unshallow
-  displayName: 'convert to non-shallow clone' 
-
-
-- task: Gradle@3
-  inputs:
-    gradleWrapperFile: 'gradlew'
-    tasks: 'build jacocoTestReport'
-    publishJUnitResults: true
-    testResultsFiles: '**/TEST-*.xml'
-    javaHomeOption: 'JDKVersion'
-    sonarQubeRunAnalysis: false
-    spotBugsAnalysis: false
+jobs:
+- job:
+  pool:
+    vmImage: ubuntu-latest
   displayName: Build
 
+  steps:
 
-- task: PublishCodeCoverageResults@1
-  inputs:
-    codeCoverageTool: 'JaCoCo'
-    summaryFileLocation: '$(System.DefaultWorkingDirectory)/build/reports/jacoco/test/jacocoTestReport.xml'
-    pathToSources: '$(System.DefaultWorkingDirectory)/src/main/java/'
-    reportDirectory: '$(System.DefaultWorkingDirectory)/build/reports/jacoco/test'
-    failIfCoverageEmpty: true
+  - script: |
+      git fetch --unshallow
+    displayName: 'convert to non-shallow clone' 
 
-#- task: PowerShell@2
-#  inputs:
-#      targetType: 'inline'
-#      script: |
-#        $htmlReportPath = "$(System.DefaultWorkingDirectory)/build/jacocoHtml/test/html/index.html"
-#        Write-Host "HTML report path: $htmlReportPath"  # Add this line to log the path
-#        $coverageDataXml = Get-Content -Path "$(System.DefaultWorkingDirectory)/build/reports/jacoco/test/jacocoTestReport.xml" -Raw
-#        Write-Host "XML report : $coverageDataXml"
-#        $coverageData = Get-Content -Path "$(System.DefaultWorkingDirectory)/build/jacocoHtml/test/html/index.html" -Raw
-#        # Realiza el análisis del archivo HTML para obtener los datos de cobertura necesarios
-#        # Puedes utilizar expresiones regulares o técnicas de manipulación de cadenas para extraer los datos específicos que necesitas
-#        $pattern = 'class="ctr2">(\d+)%<\/td>'
-#        $coverageLine = $coverageData | Select-String -Pattern $pattern | ForEach-Object { $_.Matches.Groups[1].Value }
-#        $coverage = [int]$coverageLine
-#        $minCoverageThreshold = "$(min_coverage)"
-#        Write-Host "Code coverage minimum $minCoverageThreshold% actual ($coverage%). ."#Comentar luego
-#        if ($coverage -lt $minCoverageThreshold) {
-#          Write-Host "Code coverage is below $minCoverageThreshold% ($coverage%). Failing the pipeline."
-#          exit 1
-#        } else {
-#          Write-Host "Code coverage is above $minCoverageThreshold% ($coverage%)."
-#        }
-#  displayName: 'Check code coverage JaCoCoReport'
+
+  - task: Gradle@3
+    inputs:
+      gradleWrapperFile: 'gradlew'
+      tasks: 'build jacocoTestReport'
+      publishJUnitResults: true
+      testResultsFiles: '**/TEST-*.xml'
+      javaHomeOption: 'JDKVersion'
+      sonarQubeRunAnalysis: false
+      spotBugsAnalysis: false
+    displayName: Build
+
+
+  - task: PublishCodeCoverageResults@1
+    inputs:
+      codeCoverageTool: 'JaCoCo'
+      summaryFileLocation: '$(System.DefaultWorkingDirectory)/build/reports/jacoco/test/jacocoTestReport.xml'
+      pathToSources: '$(System.DefaultWorkingDirectory)/src/main/java/'
+      reportDirectory: '$(System.DefaultWorkingDirectory)/build/reports/jacoco/test'
+      failIfCoverageEmpty: true
+
+  - task: PowerShell@2
+    inputs:
+      targetType: 'inline'
+      script: |
+        $reportFile = Get-ChildItem -Path $(System.DefaultWorkingDirectory)/build/reports/jacoco/test/jacocoTestReport.xml
+        $content = Get-Content -Path $reportFile
+        $xmlDoc = New-Object -TypeName System.Xml.XmlDocument
+        $xmlDoc.LoadXml($content)
+        $coverageNode = $xmlDoc.SelectNodes("/report/counter[@type='INSTRUCTION']")[0]
+        $covered = [double]$coverageNode.GetAttribute("covered")
+        $missed = [double]$coverageNode.GetAttribute("missed")
+        $coveragePercentage = $covered / ($covered + $missed) * 100
+        if ($coveragePercentage -lt 85) {
+          $coverageResult = $coveragePercentage.ToString("F2")
+          Write-Host "El porcentaje de cobertura de código es $coverageResult%"
+          Write-Host "La cobertura de código es inferior al 85% aceptado. Se detiene el pipeline."
+          exit 1
+        } else {
+          $coverageResult = $coveragePercentage.ToString("F2")
+          Write-Host "El porcentaje de cobertura de código es $coverageResult%"
+          Write-Host "La cobertura de código es superior al 85%. Se sigue flujo de pipeline."
+        }
+    displayName: "Verificar resultados Jacoco"
 
 
 #- task: SonarCloudPrepare@1
@@ -92,42 +95,54 @@ steps:
 #    sonarQubeGradlePluginVersion: '3.3'
 #    spotBugsAnalysis: false
 
-#- task: Docker@2
-#  inputs:
-#    containerRegistry: 'Docker'
-#    command: 'login'
-#  displayName: Docker Login
+  - task: Docker@2
+    inputs:
+      containerRegistry: 'Docker'
+      command: 'login'
+    displayName: Docker Login
 
-#- task: Docker@2
-#  inputs:
-#    containerRegistry: 'Docker'
-#    repository: 'tomascastrogonzalez/microservicio-spring'
-#    command: 'build'
-#    Dockerfile: '**/Dockerfile'
-#  displayName: Docker Build
+  - task: Docker@2
+    inputs:
+      containerRegistry: 'Docker'
+      repository: 'tomascastrogonzalez/microservicio-spring'
+      command: 'build'
+      Dockerfile: '**/Dockerfile'
+    displayName: Docker Build
 
-#- task: Docker@2
-#  inputs:
-#    containerRegistry: 'Docker'
-#    repository: 'tomascastrogonzalez/microservicio-spring'
-#    command: 'push'
-#  displayName: Docker Push
+  - task: Docker@2
+    inputs:
+      containerRegistry: 'Docker'
+      repository: 'tomascastrogonzalez/microservicio-spring'
+      command: 'push'
+    displayName: Docker Push
 
-- task: CmdLine@2
-  inputs:
-    script: |
-      jmeter -n -t microservicio-spring.jmx -l resultados.jtl
-  displayName: Run JMeter
+- job: 
+  pool: 'Default'
+  steps:
+  
+  - task: Kubernetes@1
+    inputs:
+      connectionType: 'None'
+      command: 'apply'
+      arguments: '-f deployment-app.yaml'
+      secretType: 'dockerRegistry'
+      containerRegistryType: 'Azure Container Registry'
+
+  - task: CmdLine@2
+    inputs:
+      script: |
+        jmeter -n -t microservicio-spring.jmx -l resultados.jtl
+    displayName: Run JMeter
 
 
-- task: TaurusRunner@0
-  inputs:
-    taurusConfig: |
-      execution:
-        scenario:
-          request:
-            script: microservicio-spring.jmx
-    jmeterHome: '$(JMeterInstaller.JMeterHome)'
-    jmeterPath: '$(JMeterInstaller.JMeterPath)'
-    jmeterVersion: '4.0'
-    outputDir: 'taurus-output'
+  - task: TaurusRunner@0
+    inputs:
+      taurusConfig: |
+        execution:
+          scenario:
+            request:
+              script: microservicio-spring.jmx
+      jmeterHome: '$(JMeterInstaller.JMeterHome)'
+      jmeterPath: '$(JMeterInstaller.JMeterPath)'
+      jmeterVersion: '4.0'
+      outputDir: 'taurus-output'
