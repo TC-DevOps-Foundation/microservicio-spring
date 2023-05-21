@@ -41,7 +41,7 @@
 </td>
 <td>
 <div class="infoBox" id="duration">
-<div class="counter">0.020s</div>
+<div class="counter">0.023s</div>
 <p>duration</p>
 </div>
 </td>
@@ -189,7 +189,7 @@ Expected: a string containing &quot;Hello, World&quot;
 </thead>
 <tr>
 <td class="failures">shouldReturnDefaultMessage()</td>
-<td class="failures">0.020s</td>
+<td class="failures">0.023s</td>
 <td class="failures">failed</td>
 </tr>
 </table>
@@ -197,12 +197,12 @@ Expected: a string containing &quot;Hello, World&quot;
 <div id="tab2" class="tab">
 <h2>Standard output</h2>
 <span class="code">
-<pre>2023-05-21 00:09:36.910  INFO 12132 --- [    Test worker] .b.t.a.w.s.WebMvcTestContextBootstrapper : Neither @ContextConfiguration nor @ContextHierarchy found for test class [com.example.testingweb.WebLayerTest], using SpringBootContextLoader
-2023-05-21 00:09:36.911  INFO 12132 --- [    Test worker] o.s.t.c.support.AbstractContextLoader    : Could not detect default resource locations for test class [com.example.testingweb.WebLayerTest]: no resource found for suffixes {-context.xml, Context.groovy}.
-2023-05-21 00:09:36.911  INFO 12132 --- [    Test worker] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [com.example.testingweb.WebLayerTest]: WebLayerTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
-2023-05-21 00:09:36.924  INFO 12132 --- [    Test worker] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration com.example.testingweb.TestingWebApplication for test class com.example.testingweb.WebLayerTest
-2023-05-21 00:09:36.925  INFO 12132 --- [    Test worker] .b.t.a.w.s.WebMvcTestContextBootstrapper : Loaded default TestExecutionListener class names from location [META-INF/spring.factories]: [org.springframework.boot.test.autoconfigure.restdocs.RestDocsTestExecutionListener, org.springframework.boot.test.autoconfigure.web.client.MockRestServiceServerResetTestExecutionListener, org.springframework.boot.test.autoconfigure.web.servlet.MockMvcPrintOnlyOnFailureTestExecutionListener, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverTestExecutionListener, org.springframework.boot.test.autoconfigure.webservices.client.MockWebServiceServerTestExecutionListener, org.springframework.boot.test.mock.mockito.MockitoTestExecutionListener, org.springframework.boot.test.mock.mockito.ResetMocksTestExecutionListener, org.springframework.test.context.web.ServletTestExecutionListener, org.springframework.test.context.support.DirtiesContextBeforeModesTestExecutionListener, org.springframework.test.context.event.ApplicationEventsTestExecutionListener, org.springframework.test.context.support.DependencyInjectionTestExecutionListener, org.springframework.test.context.support.DirtiesContextTestExecutionListener, org.springframework.test.context.transaction.TransactionalTestExecutionListener, org.springframework.test.context.jdbc.SqlScriptsTestExecutionListener, org.springframework.test.context.event.EventPublishingTestExecutionListener]
-2023-05-21 00:09:36.927  INFO 12132 --- [    Test worker] .b.t.a.w.s.WebMvcTestContextBootstrapper : Using TestExecutionListeners: [org.springframework.test.context.web.ServletTestExecutionListener@47e8044d, org.springframework.test.context.support.DirtiesContextBeforeModesTestExecutionListener@6a8610a3, org.springframework.test.context.event.ApplicationEventsTestExecutionListener@b2e0359, org.springframework.boot.test.mock.mockito.MockitoTestExecutionListener@166805bf, org.springframework.boot.test.autoconfigure.SpringBootDependencyInjectionTestExecutionListener@1125a153, org.springframework.test.context.support.DirtiesContextTestExecutionListener@4b7cb8dc, org.springframework.test.context.event.EventPublishingTestExecutionListener@30b35e21, org.springframework.boot.test.autoconfigure.restdocs.RestDocsTestExecutionListener@66a0e075, org.springframework.boot.test.autoconfigure.web.client.MockRestServiceServerResetTestExecutionListener@5a33facb, org.springframework.boot.test.autoconfigure.web.servlet.MockMvcPrintOnlyOnFailureTestExecutionListener@74a70309, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverTestExecutionListener@5e4f09ea, org.springframework.boot.test.autoconfigure.webservices.client.MockWebServiceServerTestExecutionListener@3f8de91e, org.springframework.boot.test.mock.mockito.ResetMocksTestExecutionListener@7a2da986]
+<pre>2023-05-21 00:12:58.258  INFO 7088 --- [    Test worker] .b.t.a.w.s.WebMvcTestContextBootstrapper : Neither @ContextConfiguration nor @ContextHierarchy found for test class [com.example.testingweb.WebLayerTest], using SpringBootContextLoader
+2023-05-21 00:12:58.259  INFO 7088 --- [    Test worker] o.s.t.c.support.AbstractContextLoader    : Could not detect default resource locations for test class [com.example.testingweb.WebLayerTest]: no resource found for suffixes {-context.xml, Context.groovy}.
+2023-05-21 00:12:58.260  INFO 7088 --- [    Test worker] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [com.example.testingweb.WebLayerTest]: WebLayerTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2023-05-21 00:12:58.272  INFO 7088 --- [    Test worker] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration com.example.testingweb.TestingWebApplication for test class com.example.testingweb.WebLayerTest
+2023-05-21 00:12:58.273  INFO 7088 --- [    Test worker] .b.t.a.w.s.WebMvcTestContextBootstrapper : Loaded default TestExecutionListener class names from location [META-INF/spring.factories]: [org.springframework.boot.test.autoconfigure.restdocs.RestDocsTestExecutionListener, org.springframework.boot.test.autoconfigure.web.client.MockRestServiceServerResetTestExecutionListener, org.springframework.boot.test.autoconfigure.web.servlet.MockMvcPrintOnlyOnFailureTestExecutionListener, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverTestExecutionListener, org.springframework.boot.test.autoconfigure.webservices.client.MockWebServiceServerTestExecutionListener, org.springframework.boot.test.mock.mockito.MockitoTestExecutionListener, org.springframework.boot.test.mock.mockito.ResetMocksTestExecutionListener, org.springframework.test.context.web.ServletTestExecutionListener, org.springframework.test.context.support.DirtiesContextBeforeModesTestExecutionListener, org.springframework.test.context.event.ApplicationEventsTestExecutionListener, org.springframework.test.context.support.DependencyInjectionTestExecutionListener, org.springframework.test.context.support.DirtiesContextTestExecutionListener, org.springframework.test.context.transaction.TransactionalTestExecutionListener, org.springframework.test.context.jdbc.SqlScriptsTestExecutionListener, org.springframework.test.context.event.EventPublishingTestExecutionListener]
+2023-05-21 00:12:58.274  INFO 7088 --- [    Test worker] .b.t.a.w.s.WebMvcTestContextBootstrapper : Using TestExecutionListeners: [org.springframework.test.context.web.ServletTestExecutionListener@127e1fa0, org.springframework.test.context.support.DirtiesContextBeforeModesTestExecutionListener@72bcc6, org.springframework.test.context.event.ApplicationEventsTestExecutionListener@7747888e, org.springframework.boot.test.mock.mockito.MockitoTestExecutionListener@5a324d9b, org.springframework.boot.test.autoconfigure.SpringBootDependencyInjectionTestExecutionListener@38d3ca62, org.springframework.test.context.support.DirtiesContextTestExecutionListener@2d52c532, org.springframework.test.context.event.EventPublishingTestExecutionListener@661a2bee, org.springframework.boot.test.autoconfigure.restdocs.RestDocsTestExecutionListener@2e0cfc23, org.springframework.boot.test.autoconfigure.web.client.MockRestServiceServerResetTestExecutionListener@8aab35a, org.springframework.boot.test.autoconfigure.web.servlet.MockMvcPrintOnlyOnFailureTestExecutionListener@33ea8c28, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverTestExecutionListener@49884e0, org.springframework.boot.test.autoconfigure.webservices.client.MockWebServiceServerTestExecutionListener@4dbc9db4, org.springframework.boot.test.mock.mockito.ResetMocksTestExecutionListener@1051c73a]
 
   .   ____          _            __ _ _
  /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
@@ -212,12 +212,12 @@ Expected: a string containing &quot;Hello, World&quot;
  =========|_|==============|___/=/_/_/_/
  :: Spring Boot ::                (v2.6.3)
 
-2023-05-21 00:09:36.972  INFO 12132 --- [    Test worker] com.example.testingweb.WebLayerTest      : Starting WebLayerTest using Java 11.0.15.1 on LAPTOP-7RBU7P53 with PID 12132 (started by tomas in C:\Users\tomas\Desktop\Proyecto\microservicio-spring)
-2023-05-21 00:09:36.973  INFO 12132 --- [    Test worker] com.example.testingweb.WebLayerTest      : No active profile set, falling back to default profiles: default
-2023-05-21 00:09:37.424  INFO 12132 --- [    Test worker] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
-2023-05-21 00:09:37.424  INFO 12132 --- [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
-2023-05-21 00:09:37.425  INFO 12132 --- [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 1 ms
-2023-05-21 00:09:37.438  INFO 12132 --- [    Test worker] com.example.testingweb.WebLayerTest      : Started WebLayerTest in 0.506 seconds (JVM running for 8.283)
+2023-05-21 00:12:58.305  INFO 7088 --- [    Test worker] com.example.testingweb.WebLayerTest      : Starting WebLayerTest using Java 11.0.15.1 on LAPTOP-7RBU7P53 with PID 7088 (started by tomas in C:\Users\tomas\Desktop\Proyecto\microservicio-spring)
+2023-05-21 00:12:58.305  INFO 7088 --- [    Test worker] com.example.testingweb.WebLayerTest      : No active profile set, falling back to default profiles: default
+2023-05-21 00:12:58.709  INFO 7088 --- [    Test worker] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2023-05-21 00:12:58.709  INFO 7088 --- [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2023-05-21 00:12:58.710  INFO 7088 --- [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 0 ms
+2023-05-21 00:12:58.730  INFO 7088 --- [    Test worker] com.example.testingweb.WebLayerTest      : Started WebLayerTest in 0.452 seconds (JVM running for 8.189)
 
 MockHttpServletRequest:
       HTTP Method = GET
@@ -303,7 +303,7 @@ MockHttpServletResponse:
 <input id="line-wrapping-toggle" type="checkbox" autocomplete="off"/>
 </label>
 </div>Generated by 
-<a href="http://www.gradle.org">Gradle 7.1</a> at 21-05-2023 00:09:39</p>
+<a href="http://www.gradle.org">Gradle 7.1</a> at 21-05-2023 00:13:00</p>
 </div>
 </div>
 </body>
