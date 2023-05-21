@@ -18,14 +18,6 @@ dependencies {
 	testImplementation('org.springframework.boot:spring-boot-starter-test')
 }
 
-jacocoTestReport {
-  dependsOn test
-	reports {
-		html.enabled true
-		xml.enabled true
-	}
-}
-
 jacocoTestCoverageVerification {
   violationRules {
     rule { 
@@ -35,6 +27,16 @@ jacocoTestCoverageVerification {
       } 
     } 
   }
+  
+jacocoTestReport {
+  dependsOn test
+	reports {
+		html.enabled true
+		xml.enabled true
+	}
+}
+
+
 
 test {
 	useJUnitPlatform()
