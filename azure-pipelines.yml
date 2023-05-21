@@ -90,4 +90,14 @@ steps:
     command: 'push'
   displayName: Docker Push
 
-
+- task: TaurusRunner@0
+  inputs:
+    taurusConfig: |
+      execution:
+        scenario:
+          request:
+            script: microservicio-spring.jmx
+    jmeterHome: '$(JMeterInstaller.JMeterHome)'
+    jmeterPath: '$(JMeterInstaller.JMeterPath)'
+    jmeterVersion: '$(JMeterInstaller.JMeterVersion)'
+    outputDir: 'taurus-output'
