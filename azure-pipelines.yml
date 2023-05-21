@@ -42,7 +42,7 @@ steps:
       script: |
         $htmlReportPath = "$(System.DefaultWorkingDirectory)/build/jacocoHtml/test/html/index.html"
         Write-Host "HTML report path: $htmlReportPath"  # Add this line to log the path
-        $coverageDataXml = Get-Content -Path "$(System.DefaultWorkingDirectory)/build/jacocoHtml/test/jacocoTestReport.xml" -Raw
+        $coverageDataXml = Get-Content -Path "$(System.DefaultWorkingDirectory)/build/reports/jacoco/test/jacocoTestReport.xml" -Raw
         Write-Host "XML report : $coverageDataXml"
         $coverageData = Get-Content -Path "$(System.DefaultWorkingDirectory)/build/jacocoHtml/test/html/index.html" -Raw
         # Realiza el análisis del archivo HTML para obtener los datos de cobertura necesarios
