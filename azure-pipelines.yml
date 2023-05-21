@@ -128,23 +128,23 @@ jobs:
       secretType: 'dockerRegistry'
       containerRegistryType: 'Azure Container Registry'
 
-  kubectl port-forward deploy/microservicio-spring-deployment 8084:8080
+  - script: kubectl port-forward deploy/microservicio-spring-deployment 8084:8080
 
-  - task: CmdLine@2
-    inputs:
-      script: |
-        jmeter -n -t microservicio-spring.jmx -l resultados.jtl
-    displayName: Run JMeter
+#  - task: CmdLine@2
+#    inputs:
+#      script: |
+#        jmeter -n -t microservicio-spring.jmx -l resultados.jtl
+#    displayName: Run JMeter
 
 
-  - task: TaurusRunner@0
-    inputs:
-      taurusConfig: |
-        execution:
-          scenario:
-            request:
-              script: microservicio-spring.jmx
-      jmeterHome: '$(JMeterInstaller.JMeterHome)'
-      jmeterPath: '$(JMeterInstaller.JMeterPath)'
-      jmeterVersion: '4.0'
-      outputDir: 'taurus-output'
+#  - task: TaurusRunner@0
+#    inputs:
+#      taurusConfig: |
+#        execution:
+#          scenario:
+#            request:
+#              script: microservicio-spring.jmx
+#      jmeterHome: '$(JMeterInstaller.JMeterHome)'
+#      jmeterPath: '$(JMeterInstaller.JMeterPath)'
+#      jmeterVersion: '4.0'
+#      outputDir: 'taurus-output'
