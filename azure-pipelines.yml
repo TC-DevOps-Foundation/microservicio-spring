@@ -18,6 +18,42 @@ jobs:
       git fetch --unshallow
     displayName: 'convert to non-shallow clone' 
 
+  - task: SonarCloudPrepare@1
+    inputs:
+      SonarCloud: 'Sonar-Azure'
+      organization: 'tc-devops-foundation'
+      scannerMode: 'MSBuild'
+      projectKey: 'TC-DevOps-Foundation_microservicio-spring'
+      projectName: 'microservicio-spring'
+    displayName: SonarCloud
+
+  - task: Gradle@3
+    inputs:
+      gradleWrapperFile: 'gradlew'
+#    workingDirectory: '$(Build.SourcesDirectory)'
+      publishJUnitResults: true
+      testResultsFiles: '*/TEST-.xml'
+      javaHomeOption: 'JDKVersion'
+      sonarQubeRunAnalysis: false
+      spotBugsAnalysis: false
+    displayName: 'Run test'
+
+  - task: Gradle@3
+    inputs:
+      gradleWrapperFile: 'gradlew'
+      tasks: 'sonar'
+      publishJUnitResults: false
+      javaHomeOption: 'JDKVersion'
+      sonarQubeRunAnalysis: true
+      sqGradlePluginVersionChoice: 'specify'
+      sonarQubeGradlePluginVersion: '3.3'
+      spotBugsAnalysis: false
+
+  - task: sonarcloud-buildbreaker@2
+    inputs:
+      SonarCloud: 'Sonar-Azure'
+      organization: 'tc-devops-foundation'
+
 
   - task: Gradle@3
     inputs:
@@ -64,36 +100,7 @@ jobs:
     displayName: "Verificar resultados Jacoco"
 
 
-  - task: SonarCloudPrepare@1
-    inputs:
-      SonarCloud: 'Sonar-Azure'
-      organization: 'tc-devops-foundation'
-      scannerMode: 'MSBuild'
-      projectKey: 'TC-DevOps-Foundation_microservicio-spring'
-      projectName: 'microservicio-spring'
-    displayName: SonarCloud
 
-  - task: Gradle@3
-    inputs:
-      gradleWrapperFile: 'gradlew'
-#    workingDirectory: '$(Build.SourcesDirectory)'
-      publishJUnitResults: true
-      testResultsFiles: '*/TEST-.xml'
-      javaHomeOption: 'JDKVersion'
-      sonarQubeRunAnalysis: false
-      spotBugsAnalysis: false
-    displayName: 'Run test'
-
-  - task: Gradle@3
-    inputs:
-      gradleWrapperFile: 'gradlew'
-      tasks: 'sonar'
-      publishJUnitResults: false
-      javaHomeOption: 'JDKVersion'
-      sonarQubeRunAnalysis: true
-      sqGradlePluginVersionChoice: 'specify'
-      sonarQubeGradlePluginVersion: '3.3'
-      spotBugsAnalysis: false
 
   - task: Docker@2
     inputs:
@@ -116,6 +123,16 @@ jobs:
       command: 'push'
     displayName: Docker Push
 
+
+  - script: |
+        docker run --rm \
+          -v $(Build.SourcesDirectory):/work \
+          -w /work \
+          vmarrazzo/jmeter \
+          -n -t microservicio-spring.jmx -l test-results.jtl
+    displayName: 'Run JMeter Test'
+
+
 #- job:
 #  #dependsOn: 'Build'
 #  pool: 'Default'
@@ -132,11 +149,11 @@ jobs:
 
 #  - script: kubectl port-forward deploy/microservicio-spring-deployment 8084:8080
 
-  - task: CmdLine@2
-    inputs:
-      script: |
-        jmeter -n -t microservicio-spring.jmx -l resultados.jtl
-    displayName: Run JMeter
+#  - task: CmdLine@2
+#    inputs:
+#      script: |
+#        jmeter -n -t microservicio-spring.jmx -l resultados.jtl
+#    displayName: Run JMeter
 
 
   - task: TaurusRunner@0
