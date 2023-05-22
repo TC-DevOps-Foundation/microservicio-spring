@@ -48,12 +48,13 @@ jobs:
       sqGradlePluginVersionChoice: 'specify'
       sonarQubeGradlePluginVersion: '3.3'
       spotBugsAnalysis: false
-    displayName: 'Gradle Sonar'
+    displayName: 'Gradlew Sonar'
 
-  - task: sonarcloud-buildbreaker@2
-    inputs:
-      SonarCloud: 'Sonar-Azure'
-      organization: 'tc-devops-foundation'
+#  - task: sonarcloud-buildbreaker@2
+#    inputs:
+#      SonarCloud: 'Sonar-Azure'
+#      organization: 'tc-devops-foundation'
+#    displayName: 'Sonar Breaker'
 
 
   - task: Gradle@3
