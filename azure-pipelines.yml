@@ -45,11 +45,11 @@ jobs:
       spotBugsAnalysis: false
     displayName: 'Gradlew Sonar'
 
-#  - task: sonarcloud-buildbreaker@2
-#    inputs:
-#      SonarCloud: 'Sonar-Azure'
-#      organization: 'tc-devops-foundation'
-#    displayName: 'Sonar Breaker'
+  - task: sonarcloud-buildbreaker@2
+    inputs:
+      SonarCloud: 'Sonar-Azure'
+      organization: 'tc-devops-foundation'
+    displayName: 'Sonar Breaker'
 
 
   - task: Gradle@3
