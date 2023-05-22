@@ -117,7 +117,7 @@ jobs:
     displayName: Docker Push
 
 - job:
-  dependsOn: 'Build'
+  #dependsOn: 'Build'
   pool: 'Default'
   displayName: Kubernetes
   steps:
