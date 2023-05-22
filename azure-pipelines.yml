@@ -30,7 +30,6 @@ jobs:
   - task: Gradle@3
     inputs:
       gradleWrapperFile: 'gradlew'
-#    workingDirectory: '$(Build.SourcesDirectory)'
       publishJUnitResults: true
       testResultsFiles: '*/TEST-.xml'
       javaHomeOption: 'JDKVersion'
@@ -158,14 +157,3 @@ jobs:
 #    displayName: Run JMeter
 
 
-  - task: TaurusRunner@0
-    inputs:
-      taurusConfig: |
-        execution:
-          scenario:
-            request:
-              script: microservicio-spring.jmx
-      jmeterHome: '$(JMeterInstaller.JMeterHome)'
-      jmeterPath: '$(JMeterInstaller.JMeterPath)'
-      jmeterVersion: '4.0'
-      outputDir: 'taurus-output'
